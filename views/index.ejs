@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="/css/log-sign.css"/>
+<div>
+    <div>
+        <fieldset id="form">
+            <legend id="legend">Login Here</legend>
+            <div class="error"><span align="center"><%- locals.error %></span></div>
+
+            <div id="box">
+                <form method="POST">
+
+                    <div id="hide" class="input">
+                        <label for="name">Username:</label>
+                        <input type="text" id="name" name="Username" size="20" maxlength="50" placeholder="Enter Your Username" onclick="namevalidate()" required>
+
+                        <div id='one'></div>
+
+                    </div>
+
+                    <div id="hide0" class="input">
+                        <label for="email">Email:</label>
+                        <input type="Text" id="email" name="email" size="30" placeholder="Enter Your Email" onclick="emailvalidate()" >
+
+                        <div id='two'></div>
+
+                    </div>
+
+                    <div id="hide1" class="input">
+                        <label for="pnum">Phone Number:</label>
+                        <input type="Text" id="pnum" name="pnum" size="20" maxlength="10" minlength="10" placeholder="Enter Your Phone number" onclick="pnumvalidate()" >
+
+                        <div id='three'></div>
+
+                    </div>
+
+                    <div id="hide4" class="input">
+                        <label for="pass">Password:</label>
+                        <input type="password" id="pass" name="Pass" size="20" maxlength="20" placeholder="Enter Your Password" required>
+
+                        <div id='four'></div>
+
+                    </div>
+
+                    <div id="hide2" class="input">
+                        <label for="re-pass">Re-password</label>
+                        <input type="password" id="repass" name="re-pass" size="20" maxlength="20" placeholder="Enter Your Password" onclick="passwordvalidate()" >
+                        
+                        <div id='five'></div>
+
+                    </div>
+
+                    <button type="submit" name="submit" value="log-in" id="bh1" class="sub" style="width:100%; text-align:center">Submit</button>
+                    <button type="submit" name="submit" value="sign-up" id="bh2" class="sub" style="width:100%; text-align:center" >Sign Up</button>
+
+                    <div style="overflow: hidden; margin: 20px 0 20px 0;">
+                        <button type="button" class="b-1 sub" onclick="login()">Login</button>
+                        <button type="button" class="b-2 sub" onclick="signup()">Sign Up</button>
+                    </div>
+                    
+                    <a class="link" href="/registerlogin" id="hide3">Forgotten Password</a>
+
+                </form>
+            </div>
+
+            
+
+        </fieldset>
+    </div>
+    <!--Login Table Info End-->
+</div>
+
+<script type="text/javascript" src="/javascripts/log-sign.js"></script>

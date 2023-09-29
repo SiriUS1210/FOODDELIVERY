@@ -1,0 +1,34 @@
+<%- include('../partials/adminheader') %>
+<link rel="stylesheet" href="/css/adminmenu.css"/>
+
+        <% item.forEach(fitem => { %>
+            <div id="item">
+                <div class="image-holder">
+                    <img src="<%= fitem.one %>" height="270" width="480">
+                </div>
+
+                <div class="item-name">
+                    <span><%= fitem.itemname %></span>
+                    <% if(fitem.foodtype=='veg'){ %>
+                        <img src="/images/veg-symbol.jpg" alt="veg" height="32" width="32"/>
+                    <% }else{ %>
+                        <img src="/images/nonveg.jpg" alt="veg" height="32" width="32"/>
+                    <% } %>
+                </div>
+
+                <div class="price-view"><%=fitem.price %>.00 Rs</div>
+
+                <div class="desc">
+                    <span class="sdesc">Description:</span><br>
+                    <p class="desc-text"><%= fitem.description %></p>
+                    
+                </div>
+                
+                <div class="btn-box"><a href="/admin/admin-menu-del-update/<%- fitem.id %>" class="sub">view</a></div>
+            </div>
+
+        <% }); %>
+
+
+<%- include('../partials/footer') %> 
+
