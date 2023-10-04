@@ -1,51 +1,45 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const menuItemSchema = new Schema({
-    
     itemname: {
         type: String,
         required: true,
         unique: true
     },
-
-    foodtype:{
+    foodtype: {
         type: String,
         required: true,
-        enum:['veg','nonveg']
+        enum: ['veg', 'nonveg']
     },
-
     shortdesp: {
         type: String,
-        required: true,
+        required: true
     },
-
     description: {
         type: String,
-        required: true,
+        required: true
     },
-
     price: {
         type: Number,
-        required: true,
+        required: true
     },
-
     image: {
         type: Buffer,
         required: true
     },
-
     imagetype: {
         type: String,
         required: true
     }
-},{timestamps: true})
+}, { timestamps: true });
 
-menuItemSchema.virtual('one').get(function() {
-    if (this.image != null && this.imagetype != null) {
-      return `data:${this.imagetype};charset=utf-8;base64,${this.image.toString('base64')}`
+menuItemSchema.virtual('one').get(function () {
+    if (this.image && this.imagetype) {
+        return `data:${this.imagetype};charset=utf-8;base64,${this.image.toString('base64')}`;
     }
-  })
+    return null;
+});
 
-const menuitem = mongoose.model('menuitem', menuItemSchema);
-module.exports = menuitem;
+const MenuItem = mongoose.model('MenuItem', menuItemSchema);
+module.exports = MenuItem;

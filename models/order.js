@@ -1,30 +1,26 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-
-    order:[],
-
-    customer_id:{
-        type: String,
-        required:true
+    order: {
+        type: Array,
+        required: true
     },
-
-    dPerson_id:{
+    customer_id: {
         type: String,
-        required:true
+        required: true
     },
-
-    expiry:{
+    dPerson_id: {
         type: String,
-        required:true,
-        enum:['expired','not expired'],
-        default:'not expired'
+        required: true
+    },
+    expiry: {
+        type: String,
+        required: true,
+        enum: ['expired', 'not expired'],
+        default: 'not expired'
     }
+}, { timestamps: true });
 
-},
-
-{timestamps: true})
-
-const order = mongoose.model('order', orderSchema);
-module.exports = order;
+const Order = mongoose.model('Order', orderSchema);
+module.exports = Order;

@@ -155,28 +155,25 @@ router.get('/deliverers', async (req, res) =>{
     }
 })
 
-//add deliverers
-router.post('/deliverers',async (req,res) =>{
+// add deliverers
+router.post('/deliverers', async (req, res) => {
     if (req.session.authorized) {
         var deliverer = new Delivery({
-
             deliverer_name: req.body.name,
-            Phone_number: req.body.pnum, 
-        })
+            phone_number: req.body.pnum, // Use 'phone_number' instead of 'Phone_number'
+        });
 
-        try{
-            const x= await deliverer.save()
-            res.redirect('/admin/deliverers')
-
-        }catch(err){
-            res.redirect('/admin')
-            console.error(err)
-            
+        try {
+            const x = await deliverer.save();
+            res.redirect('/admin/deliverers');
+        } catch (err) {
+            res.redirect('/admin');
+            console.error(err);
         }
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
-})
+});
 
 
 //get orders

@@ -1,82 +1,61 @@
-const Menuitem = require('../models/menuitems')
+const MenuItem = require('../models/menuitems');
 
-let cart=null
+let cart = null;
 
-module.exports = class Cart {
-
-    static save(product,amount) {
-
-        if (cart === null) {
-            cart = { products: [], totalprice:0 };
-            cart.products.push(product);
-            cart.totalprice = Cart.getTotalPrice();
-            
-        }else{
-            var existingProductIndex = Cart.getIndex(product)// to check product is existing in cart
-            if (existingProductIndex != -1) { 
-                
-                // exist in cart already
-                var y=parseInt(cart.products[existingProductIndex][2])
-                amount+=y;
-                cart.products[existingProductIndex][2]=amount;
-
-                cart.totalprice = Cart.getTotalPrice();
-
-            }else{
-                cart.products.push(product);
-                cart.totalprice = Cart.getTotalPrice()
-            }
-        }
-
-        //cart.totalPrice += product.price;
+class Cart {
+  static save(product, amount) {
+    if (cart === null) {
+      cart = { products: [], totalprice: 0 };
+      cart.products.push(product);
+      cart.totalprice = Cart.getTotalPrice();
+    } else {
+      const existingProductIndex = Cart.getIndex(product);
+      if (existingProductIndex !== -1) {
+        const existingQuantity = parseInt(cart.products[existingProductIndex][2], 10);
+        amount += existingQuantity;
+        cart.products[existingProductIndex][2] = amount;
+      } else {
+        cart.products.push(product);
+      }
+      cart.totalprice = Cart.getTotalPrice();
     }
+  }
 
-    static getIndex(prod){
-        for (var i=0; i<cart.products.length;i++){
-            if(cart.products[i][1] === prod[1]){
-                return i;
-            }
-        }
-        return -1;
-    }   
+  static getIndex(prod) {
+    return cart.products.findIndex(item => item[1] === prod[1]);
+  }
 
-    static getTotalPrice(){
-        var tp=0
-        for (let i=0; i<cart.products.length; i++)
-        {   
-            var price=cart.products[i][0].price;
+  static getTotalPrice() {
+    return cart.products.reduce((total, item) => {
+      const price = item[0].price;
+      const quantity = item[2];
+      return total + price * quantity;
+    }, 0);
+  }
 
-            var qtyprice= price * cart.products[i][2];
-            tp += qtyprice;
-        }
-        return tp;
+  static changeQuantity(id, qty) {
+    const productIndex = cart.products.findIndex(item => item[1] === id);
+    if (productIndex !== -1) {
+      cart.products[productIndex][2] = qty;
+      cart.totalprice = Cart.getTotalPrice();
     }
+  }
 
-    static changeqty(id,qty){
-        for(var i=0;i<cart.products.length;i++){
-            if(cart.products[i][1]== id){
-                cart.products[i][2] =qty;
-                cart.totalprice = Cart.getTotalPrice()
-            }
-        }
+  static getCart() {
+    return cart;
+  }
+
+  static deleteItem(id) {
+    const productIndex = cart.products.findIndex(item => item[1] === id);
+    if (productIndex !== -1) {
+      cart.products.splice(productIndex, 1);
+      cart.totalprice = Cart.getTotalPrice();
     }
+  }
 
-    static getCart() {
-        return cart;
-    }
-
-    static deleteItem(id){
-        for(var i=0;i<cart.products.length;i++){
-            if(cart.products[i][1]== id){
-                cart.products.splice(i,1)
-            }
-        }
-        cart.totalprice = Cart.getTotalPrice()
-    }
-
-    static deleteAll() {
-        cart=null
-        
-    }
-
+  static deleteAll() {
+    cart = null;
+  }
 }
+
+module.exports = Cart;
